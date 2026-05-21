@@ -1,30 +1,55 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:driving_rule/data/auth/auth_repository.dart';
+import 'package:driving_rule/data/auth/auth_result.dart';
+import 'package:driving_rule/features/auth/presentation/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:driving_rule/main.dart';
+class _FakeAuthRepository implements AuthRepository {
+  @override
+  Future<AuthResult> login({
+    required String phoneNumber,
+    required String password,
+  }) async {
+    return const AuthResult(isSuccess: true, message: 'ok');
+  }
+
+  @override
+  Future<AuthResult> register({
+    required String phoneNumber,
+    required String fullName,
+    required String password,
+  }) async {
+    return const AuthResult(isSuccess: true, message: 'ok');
+  }
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Auth page starts in register mode with full name field', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(home: AuthPage(repository: _FakeAuthRepository())),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Register'), findsWidgets);
+    expect(find.text('Login'), findsWidgets);
+    expect(find.text('Full Name'), findsOneWidget);
+    expect(find.text('Confirm Password'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Switching to login hides register-only fields', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(home: AuthPage(repository: _FakeAuthRepository())),
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.tap(find.text('Login').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Full Name'), findsNothing);
+    expect(find.text('Confirm Password'), findsNothing);
+    expect(find.text('Phone Number'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
   });
 }
