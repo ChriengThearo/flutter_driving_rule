@@ -58,6 +58,12 @@ flutter:
   uses-material-design: true
 
   assets:
+    - driving_rules_data/driving_rules_data/general.json
+    - driving_rules_data/driving_rules_data/emergency.json
+    - driving_rules_data/driving_rules_data/technique.json
+    - driving_rules_data/driving_rules_data/sign.json
+    - driving_rules_data/driving_rules_data/priority.json
+    - driving_rules_data/driving_rules_data/sign/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

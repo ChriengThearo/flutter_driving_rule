@@ -1,6 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'core/theme/app_theme.dart';
+import 'features/learning/domain/module_config.dart';
+import 'features/learning/presentation/home_screen.dart';
+import 'features/learning/presentation/module_screen.dart';
 
 void main() {
   runApp(const DrivingRuleApp());
@@ -15,24 +18,11 @@ class DrivingRuleApp extends StatelessWidget {
       title: 'Driving Rule',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Driving Rule')),
-      body: const Center(
-        child: Text(
-          'Welcome to Driving Rule',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
-      ),
+      home: const HomeScreen(),
+      routes: {
+        for (final module in ModuleConfig.all)
+          module.routeName: (context) => ModuleScreen(module: module),
+      },
     );
   }
 }
