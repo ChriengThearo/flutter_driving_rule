@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'core/theme/app_theme.dart';
+import 'features/exam/presentation/exam_screen.dart';
 import 'features/learning/domain/module_config.dart';
 import 'features/learning/presentation/home_screen.dart';
 import 'features/learning/presentation/module_screen.dart';
@@ -20,6 +21,7 @@ class DrivingRuleApp extends StatelessWidget {
       theme: AppTheme.light,
       home: const HomeScreen(),
       routes: {
+        ExamScreen.routeName: (context) => const ExamScreen(),
         for (final module in ModuleConfig.all)
           module.routeName: (context) => ModuleScreen(module: module),
       },

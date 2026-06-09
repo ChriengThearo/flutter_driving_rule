@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../exam/presentation/exam_screen.dart';
 import '../domain/module_config.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -50,6 +51,10 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: _ExamCard(),
+            ),
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.all(16),
@@ -74,6 +79,32 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ExamCard extends StatelessWidget {
+  const _ExamCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      key: const Key('moduleCard_Exam'),
+      color: const Color(0xFFE8FFF6),
+      child: ListTile(
+        leading: const Icon(
+          Icons.assignment_turned_in_outlined,
+          color: Color(0xFF0D7A5F),
+          size: 34,
+        ),
+        title: const Text(
+          'EXAM MODULE READY',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
+        subtitle: const Text('45 questions, 45 minutes, 38 points to pass'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => Navigator.pushNamed(context, ExamScreen.routeName),
       ),
     );
   }

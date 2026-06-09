@@ -7,14 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Home shows five module cards', (WidgetTester tester) async {
+  testWidgets('Home shows module cards and exam card', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const DrivingRuleApp());
     await tester.pumpAndSettle();
 
+    expect(find.byKey(const Key('moduleCard_Exam')), findsOneWidget);
     expect(find.byKey(const Key('moduleCard_General')), findsOneWidget);
     expect(find.byKey(const Key('moduleCard_Emergency')), findsOneWidget);
     expect(find.byKey(const Key('moduleCard_Technique')), findsOneWidget);
     expect(find.byKey(const Key('moduleCard_Sign')), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -300));
+    await tester.pumpAndSettle();
+
     expect(find.byKey(const Key('moduleCard_Priority')), findsOneWidget);
   });
 
