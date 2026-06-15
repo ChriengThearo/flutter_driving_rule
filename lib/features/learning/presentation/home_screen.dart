@@ -65,6 +65,7 @@ class HomeScreen extends StatelessWidget {
                   return Card(
                     key: Key('moduleCard_${module.title}'),
                     child: ListTile(
+                      leading: _ModuleImage(module: module),
                       title: Text(module.title),
                       subtitle: const Text(
                         'Search questions and view correct answers',
@@ -84,6 +85,32 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class _ModuleImage extends StatelessWidget {
+  const _ModuleImage({required this.module});
+
+  final ModuleConfig module;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 44,
+      height: 44,
+      child: Image.asset(_imagePath, fit: BoxFit.contain),
+    );
+  }
+
+  String get _imagePath {
+    return switch (module.routeName) {
+      '/module/general' => 'images/home_page/general.png',
+      '/module/emergency' => 'images/home_page/emergency.png',
+      '/module/technique' => 'images/home_page/technique.png',
+      '/module/sign' => 'images/home_page/sign.png',
+      '/module/priority' => 'images/home_page/priority.png',
+      _ => 'images/home_page/general.png',
+    };
+  }
+}
+
 class _ExamCard extends StatelessWidget {
   const _ExamCard();
 
@@ -99,7 +126,7 @@ class _ExamCard extends StatelessWidget {
           size: 34,
         ),
         title: const Text(
-          'EXAM MODULE READY',
+          'Ready to Exam',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
         subtitle: const Text('45 questions, 45 minutes, 38 points to pass'),
